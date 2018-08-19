@@ -17,7 +17,7 @@ from torch.autograd import Variable       # import variable as gradient
 # Creating the Architecture of Neural Network
 #  AI is class we create an  object
 
-class Network(nn.module):                  # to inherited all tools of nn module
+class Network(nn.Module):                  # to inherited all tools of nn module
     
     def __init__(self, input_size, nb_action):                 # Self is complusory as referring to object 2nd parameter is no of input neurons(our case 5) , 3rd is output neurons(our case 3)
         super(Network, self).__init__()                  ## use tools of nn module
@@ -27,9 +27,9 @@ class Network(nn.module):                  # to inherited all tools of nn module
         self.fc2 = nn.Linear(30, nb_action)                # Full connection b/w hidden layer and output Layers
                         
     def forward(self , state):               # Forward Function activate neuron, state neurons entering and this function also return Q values for each action
-       x =  F.relu(self.fc1(state))               # Activate hidden neurons use function torch nn relu functional
-                # Q values for each action output neurons as fc2 (x) is hidden neurons
-       return self.fc2(x)             # returing each action left, rigth , staight
+        x =  F.relu(self.fc1(state))               # Activate hidden neurons use function torch nn relu functional
+        q_values = self.fc2(x)          # Q values for each action output neurons as fc2 (x) is hidden neurons
+        return q_values              # returing each action left, rigth , staight
    
 ## Implementing Experience Replay
        
@@ -111,3 +111,5 @@ class Dqn():                    # Brain of AI
             print('done !')
         else:
            print('no checkpoint found')
+           
+        
